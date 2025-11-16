@@ -1,7 +1,12 @@
+import Webcam from "react-webcam";
+import './Camera.css';
+
 export default function Camera() {
     return (
         <>
-            <h1>카메라 페이지</h1>
+            <div className="camera">
+                <Webcam />
+            </div>
         </>
     )
 }
