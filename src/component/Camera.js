@@ -67,6 +67,9 @@ export default function Camera() {
                 <div className="countdown">
                     {Math.ceil(timeLeft / 1000)}
                 </div>
+                <div className="poto-count">
+                    {count} / 6
+                </div>
 
                 {flash && <div className="flash-effect"></div>}
             </div>
