@@ -1,0 +1,49 @@
+.photo-select-wrapper {
+    bottom: 0px;
+    position: fixed;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.slick-slide div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-slider {
+    width: 100%
+}
+
+.photo-wrapper {
+    position: relative;
+}
+
+.photo-img {
+    transition: 0.2s;
+}
+
+.photo-img.selected {
+    opacity: 0.4;
+}
+
+.select-number {
+    position: absolute;
+    top: 50%;
+    left: 42%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+
+.next-btn {
+    background-color: white;
+    border: none;
+    font-size: 32px;
+    top: 20px;
+    right: 20px;
+    position: fixed;
+    padding: 10px 20px;
+}
