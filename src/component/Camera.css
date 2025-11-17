@@ -40,3 +40,13 @@
         opacity: 0;
     }
 }
+
+.poto-count {
+    position: absolute;
+    color: white;
+    top: 5%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    font-weight: bold;
+}
