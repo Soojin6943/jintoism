@@ -13,6 +13,9 @@ export default function Camera() {
     const webcamRef = useRef(null);
     const [timeLeft, setTimeLeft] = useState(7*1000);
     const [flash, setFlash] = useState(false);
+    const [potos, setPotos] = useState([]);
+    const [count, setCount] = useState(0);
+    const timeRef = useRef(null);
 
     const capture = useCallback(
         () => {
@@ -20,24 +23,36 @@ export default function Camera() {
             setTimeout(() => setFlash(false), 150);
 
             const imageSrc = webcamRef.current.getScreenshot();
-            console.log(imageSrc);
+            setPotos(prev => [...prev, imageSrc]);
+            
+            console.log("촬영됨");
         },
         [webcamRef]
     )
-
     useEffect(() => {
-        const timer = setInterval(() => {
+         timeRef.current = setInterval(() => {
             setTimeLeft((prevTime) => prevTime - 1000);
         }, 1000);
 
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            capture();
-            console.log("success");
+        return () => clearInterval(timeRef.current);
+    }, []);
+
+    useEffect(() => {
+
+        if (count >= 6) {
+            clearInterval(timeRef.current);
+            console.log(potos[0]);
+            console.log(potos[1]);
+            return;
         }
 
-        return () => clearInterval(timer);
-    }, [timeLeft]);
+        if (timeLeft <= 0) {
+            capture();
+            setCount(count + 1);
+            setTimeLeft(7*1000);
+        }
+
+    }, [timeLeft, count]);
 
     return (
         <>
