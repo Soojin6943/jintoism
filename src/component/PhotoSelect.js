@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"; 
@@ -8,6 +8,7 @@ import PreviewFrame from "./PreviewFrame";
 
 export default function PhotoSelect() {
     const location = useLocation();
+    const navigate = useNavigate();
     const photos = location.state.photos;
     const [selectedPhotos, setSelectedPhotos] = useState([]);
     console.log(photos)
@@ -39,6 +40,9 @@ export default function PhotoSelect() {
 
     const previewImages = selectedPhotos.map(i => photos[i]);
 
+    function goNext() {
+        navigate('/frame', { state: { photos: previewImages}});
+    }
     return (
         <div className="photo-select-wrapper">
             <PreviewFrame photos={previewImages} />
@@ -63,6 +67,11 @@ export default function PhotoSelect() {
                     </div>
                 )})}
             </Slider>
+
+            <button className={`next-btn ${selectedPhotos.length === 4 ? 'active' : ''}`}
+                disabled={selectedPhotos.length !== 4}
+                onClick={goNext}
+            > ✔️ </button>
         </div>
     );
 }
