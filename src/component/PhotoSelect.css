@@ -1,0 +1,17 @@
+.photo-select-wrapper {
+    bottom: 0px;
+    position: fixed;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.slick-slide div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-slider {
+    width: 100%
+}
