@@ -1,6 +1,7 @@
 import Webcam from "react-webcam";
 import './Camera.css';
 import { useRef, useCallback, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const videoConstraints = {
     width: 820,
@@ -16,6 +17,7 @@ export default function Camera() {
     const [potos, setPotos] = useState([]);
     const [count, setCount] = useState(0);
     const timeRef = useRef(null);
+    const navigate = useNavigate();
 
     const capture = useCallback(
         () => {
@@ -41,9 +43,7 @@ export default function Camera() {
 
         if (count >= 6) {
             clearInterval(timeRef.current);
-            console.log(potos[0]);
-            console.log(potos[1]);
-            return;
+            navigate('/select');
         }
 
         if (timeLeft <= 0) {
