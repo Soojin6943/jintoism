@@ -43,7 +43,11 @@ export default function Camera() {
                     screenshotFormat="image/jpeg" 
                     ref={webcamRef}
                     videoConstraints={videoConstraints} 
-                    mirrored={true} />
+                    mirrored={true} >
+                </Webcam>
+                <div className="countdown">
+                    {Math.ceil(timeLeft / 1000)}
+                </div>
             </div>
         </>
     )
