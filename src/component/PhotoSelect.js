@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"; 
 import './PhotoSelect.css';
 import { useState } from "react";
+import PreviewFrame from "./PreviewFrame";
 
 export default function PhotoSelect() {
     const location = useLocation();
@@ -36,8 +37,12 @@ export default function PhotoSelect() {
         console.log("사진 선택됨" + index);
     }
 
+    const previewImages = selectedPhotos.map(i => photos[i]);
+
     return (
         <div className="photo-select-wrapper">
+            <PreviewFrame photos={previewImages} />
+            
             <Slider {...settings}>
                 {photos.map((photo, index) => {
                     const isSelected = selectedPhotos.includes(index);
