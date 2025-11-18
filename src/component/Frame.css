@@ -1,0 +1,31 @@
+.frame-select-wrapper {
+    top: 77px;
+    bottom: 0px;
+    position: relative;
+    width: 100vw;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+.slick-slide div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-slider {
+    width: 100%
+}
+
+.frame-wrapper {
+    position: relative;
+}
+
+.frame-thumbnail {
+    transition: 0.2s;
+}
+
+.frame-thumbnail.selected {
+    opacity: 0.4;
+}
