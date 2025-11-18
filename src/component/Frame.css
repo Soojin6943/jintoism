@@ -29,3 +29,22 @@
 .frame-thumbnail.selected {
     opacity: 0.4;
 }
+
+.check-btn {
+    background-color: white;
+    border: none;
+    font-size: 32px;
+    top: 20px;
+    right: 20px;
+    position: fixed;
+    padding: 10px 20px;
+}
+
+.check-btn.active {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.check-btn:disabled {
+    cursor: not-allowed;
+}

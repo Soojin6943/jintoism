@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"; 
 import './Frame.css';
+import LoadingPopup from './LoadingPopup';
 
 
 const FRAME_OPTIONS = [
@@ -40,9 +41,25 @@ export default function Frame() {
         setSelectedFrameId(frameId);
     }
 
+    const [popupVisible, setPopupVisible] = useState(false);
+    const [qrUrl, setQrUrl] = useState(null);
+
+    function goNext() {
+        setPopupVisible(true);
+
+        // 모의 API 호출
+        setTimeout(() => {
+            // QR 코드 이미지 URL (모의)
+            const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
+            setQrUrl(generatedQrUrl);
+        }, 2000);
+    }
+
     return (
         <div className='frame-select-wrapper'>
             <PreviewFrame photos={photos} frameUrl={selectedFrame.url} />
+
+            <LoadingPopup visible={popupVisible} qrUrl={qrUrl} />
 
             <Slider {...settings}>
                 {FRAME_OPTIONS.map(frame => {
@@ -62,10 +79,17 @@ export default function Frame() {
                             {isSelected && (
                                 <div className='selected'></div>
                             )}
+
                         </div>
                     )
                 })}
             </Slider>
+
+            <button
+                className={`check-btn ${selectedFrameId ? 'active' : ''}`}
+                disabled={!selectedFrameId}
+                onClick={goNext} 
+            > ✔️ </button>
         </div>
     )
 }
