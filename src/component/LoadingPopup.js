@@ -1,6 +1,7 @@
+import { QRCodeCanvas } from 'qrcode.react';
 import './LoadingPopup.css';
 
-export default function LoadingPopup({ visible, qrUrl}) {
+export default function LoadingPopup({ visible, qrUrl }) {
     if (!visible) return null;
 
     return (
@@ -14,7 +15,14 @@ export default function LoadingPopup({ visible, qrUrl}) {
                 ) : (
                     <>
                         <p className='popup-message'>QR이 생성되었습니다.</p>
-                        <img src={qrUrl} className='qr-image' />
+                        <QRCodeCanvas
+                            value={qrUrl}
+                            size={150}
+                            bgColor={"#ffffff"}
+                            fgColor={"#000000"}
+                            level={"M"}
+                            className='qr-image'
+                        />
                     </>
                 )}
             </div>

@@ -60,19 +60,35 @@ export default function Frame() {
         return new File([u8arr], filename, {type:mime});
     }
 
+    async function uploadToServer(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = fetch('http://localhost:8080/upload', {
+            method: 'POST',
+            body: formData
+        })
+
+        const url = (await response).text();
+        return url;
+    }
+
     async function goNext() {
         setPopupVisible(true);
 
         const finalImageBase64 = await createFinalImage(photos, selectedFrame.url);
 
         var file = base64ToFile(finalImageBase64, 'finalImage.png');
-        console.log("최종 이미지 파일:", file);
 
-        setTimeout(() => {
-            // QR 코드 이미지 URL (모의)
-            const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
-            setQrUrl(generatedQrUrl);
-        }, 2000);
+        const uploadedUrl = await uploadToServer(file);
+
+        setQrUrl(uploadedUrl);
+
+        // setTimeout(() => {
+        //     // QR 코드 이미지 URL (모의)
+        //     const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
+        //     setQrUrl(generatedQrUrl);
+        // }, 2000);
 
     }
 
