@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css"; 
 import './Frame.css';
 import LoadingPopup from './LoadingPopup';
+import { createFinalImage } from '../utils/createFinalImage';
 
 
 const FRAME_OPTIONS = [
@@ -47,12 +48,19 @@ export default function Frame() {
     function goNext() {
         setPopupVisible(true);
 
-        // 모의 API 호출
-        setTimeout(() => {
-            // QR 코드 이미지 URL (모의)
-            const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
-            setQrUrl(generatedQrUrl);
-        }, 2000);
+        createFinalImage(photos, selectedFrame.url).then((finalImageBase64) => {
+
+            console.log("최종 이미지 base64:", finalImageBase64);
+
+                    // 모의 API 호출
+            setTimeout(() => {
+                // QR 코드 이미지 URL (모의)
+                const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
+                setQrUrl(generatedQrUrl);
+            }, 2000);
+        })
+
+
     }
 
     return (
