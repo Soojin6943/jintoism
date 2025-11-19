@@ -45,21 +45,34 @@ export default function Frame() {
     const [popupVisible, setPopupVisible] = useState(false);
     const [qrUrl, setQrUrl] = useState(null);
 
-    function goNext() {
+
+    function base64ToFile(base_data, filename) {
+
+        var arr = base_data.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+        while(n--){
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, {type:mime});
+    }
+
+    async function goNext() {
         setPopupVisible(true);
 
-        createFinalImage(photos, selectedFrame.url).then((finalImageBase64) => {
+        const finalImageBase64 = await createFinalImage(photos, selectedFrame.url);
 
-            console.log("최종 이미지 base64:", finalImageBase64);
+        var file = base64ToFile(finalImageBase64, 'finalImage.png');
+        console.log("최종 이미지 파일:", file);
 
-                    // 모의 API 호출
-            setTimeout(() => {
-                // QR 코드 이미지 URL (모의)
-                const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
-                setQrUrl(generatedQrUrl);
-            }, 2000);
-        })
-
+        setTimeout(() => {
+            // QR 코드 이미지 URL (모의)
+            const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
+            setQrUrl(generatedQrUrl);
+        }, 2000);
 
     }
 
