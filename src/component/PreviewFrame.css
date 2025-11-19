@@ -8,8 +8,8 @@
     overflow: hidden;
 }
 .frame-slot{
-    width: 196px;
-    height: 282px;
+    width: 197px;
+    height: 303px;
     position: absolute;
     overflow: hidden;
     z-index: 1;
@@ -19,26 +19,28 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: scale(1.1);
+    transform-origin: center center;
 }
 
 .slot-0 {
-    top: 60px;
-    left: 36px;
+    top: 32px;
+    left: 32px;
 }
 
 .slot-1 {
-    top: 60px;
-    left: 250px;
+    top: 32px;
+    left: 252px;
 }
 
 .slot-2 {
-    top: 360px;
-    left: 36px;
+    top: 338px;
+    left: 32px;
 }
 
 .slot-3 {
-    top: 360px;
-    left: 250px;
+    top: 338px;
+    left: 252px;
 }
 
 .frame-overlay {

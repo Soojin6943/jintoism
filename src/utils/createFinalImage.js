@@ -1,72 +1,50 @@
 export async function createFinalImage(photos, frameUrl) {
-    return new Promise(async (resolve) => {
+    const DPR = Math.min(window.devicePixelRatio || 2, 3); // 최대 3배
+    const BASE_WIDTH = 2400;
+    const BASE_HEIGHT = 3600;
 
-        const canvas = document.createElement('canvas');
-        canvas.width = 482;
-        canvas.height = 732;
-        const ctx = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    canvas.width = BASE_WIDTH * DPR;
+    canvas.height = BASE_HEIGHT * DPR;
 
-        const slots = [
-            { x: 36, y: 60 },
-            { x: 250, y: 60 },
-            { x: 36, y: 360 },
-            { x: 250, y: 360 }
-        ];
+    const ctx = canvas.getContext("2d");
+    ctx.scale(DPR, DPR);
 
-        const slotWidth = 196;
-        const slotHeight = 282;
+    const slots = [
+        { x: 160,  y: 160,  w: 985, h: 1493 },  
+        { x: 1255, y: 160,  w: 985, h: 1493 },  
+        { x: 160,  y: 1663, w: 985, h: 1493 },  
+        { x: 1255, y: 1663, w: 985, h: 1493 },      
+    ];
 
-        for (let i=0; i < photos.length; i++) {
-            const img = await loadImage(photos[i]);
-            const cropped = cropToSlot(img, slotWidth, slotHeight);
-            const slot = slots[i];
-            ctx.drawImage(cropped, 0, 0, slotWidth, slotHeight, slot.x, slot.y, slotWidth, slotHeight);
+
+    // 각 사진 넣기
+    for (let i = 0; i < photos.length; i++) {
+        const img = await loadImage(photos[i]);
+        const s = slots[i];
+
+        const scale = 1.1;
+
+        const dw = s.w * scale;
+        const dh = s.h * scale;
+        const dx = s.x - (dw - s.w) / 2;
+        const dy = s.y - (dh - s.h) / 2;
+
+        ctx.drawImage(img, dx, dy, dw, dh);
         }
 
-        if (frameUrl) {
-            const frameImg = await loadImage(frameUrl);
-            ctx.drawImage(frameImg, 0, 0, canvas.width, canvas.height);
-        }
+    // 프레임 덮기
+    const frame = await loadImage(frameUrl);
+    ctx.drawImage(frame, 0, 0, BASE_WIDTH, BASE_HEIGHT);
 
-        const finalImage = canvas.toDataURL('image/png', 0.9);
-        resolve(finalImage);
-    });
+    return canvas.toDataURL("image/jpeg", 0.92);
 }
 
-function loadImage(src){
-    return new Promise((resolve) => {
+function loadImage(src) {
+    return new Promise(resolve => {
         const img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.onload = () => {
-            resolve(img);
-        };
+        img.crossOrigin = "anonymous";
+        img.onload = () => resolve(img);
         img.src = src;
-    })
-}
-
-function cropToSlot(img, slotWidth, slotHeight) {
-    const inputRatio = img.width / img.height;
-    const slotRatio = slotWidth / slotHeight;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = slotWidth;
-    canvas.height = slotHeight;
-    const ctx = canvas.getContext('2d');
-
-    let sx, sy, sw, sh;
-
-    if (inputRatio > slotRatio) {
-        sh = img.height;
-        sw = sh * slotRatio;
-        sx = (img.width - sw) / 2;
-        sy = 0;
-    } else {
-        sw = img.width;
-        sh = sw / slotRatio;
-        sx = 0;
-        sy = (img.height - sh) / 2;
-    }
-
-    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, slotWidth, slotHeight);
-    return canvas;
+    });
 }

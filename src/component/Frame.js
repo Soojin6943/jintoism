@@ -11,7 +11,7 @@ import { createFinalImage } from '../utils/createFinalImage';
 
 const FRAME_OPTIONS = [
     { id: 'basic', name: '기본', url: '/frames/frame-basic.png' },
-    { id: 'test1', name: '기본', url: '/frames/frame-basic.png' },
+    { id: 'test1', name: '기본', url: '/frames/frame-2.png' },
     { id: 'test2', name: '기본', url: '/frames/frame-basic.png' },
 ]
 
@@ -64,7 +64,7 @@ export default function Frame() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = fetch('http://localhost:8080/upload', {
+        const response = fetch('http://172.30.1.22:8080/upload', {
             method: 'POST',
             body: formData
         })
@@ -78,7 +78,7 @@ export default function Frame() {
 
         const finalImageBase64 = await createFinalImage(photos, selectedFrame.url);
 
-        var file = base64ToFile(finalImageBase64, 'finalImage.png');
+        var file = base64ToFile(finalImageBase64, 'finalImage.jpg');
 
         const uploadedUrl = await uploadToServer(file);
 
