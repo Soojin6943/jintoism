@@ -1,5 +1,6 @@
 import { QRCodeCanvas } from 'qrcode.react';
 import './LoadingPopup.css';
+import { Link } from 'react-router-dom';
 
 export default function LoadingPopup({ visible, qrUrl }) {
     if (!visible) return null;
@@ -23,6 +24,8 @@ export default function LoadingPopup({ visible, qrUrl }) {
                             level={"M"}
                             className='qr-image'
                         />
+                        <p className='popup-message'>아이폰에서 이미지를 길게 눌러 사진을 저장하세요.</p>
+                        <Link to="/"><button style={{ fontSize:'18px', margin: '10px', padding: '7px 15px' }}>홈으로</button></Link>
                     </>
                 )}
             </div>

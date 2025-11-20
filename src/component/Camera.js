@@ -3,11 +3,12 @@ import './Camera.css';
 import { useRef, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const videoConstraints = {
-    width: 820,
-    height: 1180,
-    facingMode: "user"
-}
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const videoConstraints = isIOS
+  ? { aspectRatio: 4/3, facingMode: "user" }
+  : { width: 820, height: 1180, facingMode: "user" };
+
 
 export default function Camera() {
 

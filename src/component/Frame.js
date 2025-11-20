@@ -64,7 +64,7 @@ export default function Frame() {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = fetch('http://172.30.1.22:8080/upload', {
+        const response = fetch('http://172.20.10.60:8080/upload', {
             method: 'POST',
             body: formData
         })
@@ -83,12 +83,6 @@ export default function Frame() {
         const uploadedUrl = await uploadToServer(file);
 
         setQrUrl(uploadedUrl);
-
-        // setTimeout(() => {
-        //     // QR 코드 이미지 URL (모의)
-        //     const generatedQrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example';
-        //     setQrUrl(generatedQrUrl);
-        // }, 2000);
 
     }
 
