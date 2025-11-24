@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# 📸 JINTOISM 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+JINTOISM은 **리액트 기반 네컷 사진 촬영 서비스**로,
+사용자가 촬영한 네 장의 사진을 선택한 프레임에 담아 **최종 이미지를 생성하고**,
+**QR 코드로 다운로드 링크를 제공하는** 웹 애플리케이션입니다.
 
-## Available Scripts
 
-In the project directory, you can run:
+##  기능 목록
 
-### `npm start`
+### 1. 홈 화면
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* 촬영 시작 버튼 제공
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### 2. 사진 촬영
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **카메라 권한 요청**
+* 아이패드/모바일 친화적인 촬영 화면
+* 셀카 비율 카메라 (cover 방식)
+* 총 6장의 사진 연속 촬영
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 3. 사진 선택
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* 사용자가 촬영한 이미지 중 원하는 4장을 선택
+* 선택된 사진은 다음 단계로 전달
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 4. 프레임 선택
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* 4컷 이미지를 미리보기와 함께 확인 가능
+* 사용자가 제공된 프레임 중 원하는 하나를 선택
+* 선택 시 실시간으로 미리보기 반영
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 5. 최종 이미지 생성 (Canvas)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* 각 사진을 슬롯 비율에 맞도록 crop (cover)
+* 선택한 프레임 PNG를 오버레이하여 합성
+* 최종 4컷 이미지를 Base64 → File 변환
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 6. 서버 업로드
 
-### Analyzing the Bundle Size
+* 서버는 UUID 기반으로 이미지 저장
+* `/image/{id}`로 접근 가능한 URL 생성
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 7. QR 코드 제공
 
-### Advanced Configuration
+* 업로드된 URL을 QR로 생성
+* 팝업 UI를 통해 QR 표시
+* QR을 스캔해 최종 이미지를 누구나 다운로드 가능
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+##  프로젝트 구조
 
-### `npm run build` fails to minify
+### **Frontend (React)**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+src
+ ┣ component
+ ┃ ┣ Home.js
+ ┃ ┣ Camera.js
+ ┃ ┣ PhotoSelect.js
+ ┃ ┣ PreviewFrame.js
+ ┃ ┣ Frame.js
+ ┃ ┗ LoadingPopup.js
+ ┣ utils
+ ┃ ┗ createFinalImage.js
+ ┗ index.js
+```
+
+### **Backend (Spring Boot)**
+
+```
+src
+ ┣ main
+ ┃ ┣ java/org.example
+ ┃ ┃ ┣ JintoismApplication.java
+ ┃ ┃ ┗ controller/UploadController.java
+ ┃ ┗ resources/application.properties
+```
+
+
+
+##  기술 스택
+
+### Frontend
+
+* React
+* React Router
+* react-slick
+* HTML Canvas API
+* GitHub Pages 배포
+
+### Backend
+
+* Java 21
+* Spring Boot 3
+* Multipart upload
+
+
+##  실행 방법
+
+###  Frontend
+
+```
+npm install
+npm start
+```
